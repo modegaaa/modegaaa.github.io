@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>动态表格</title>
+<style>
+table{
+border:1px solid;
+margin:auto;
+width:500px;
+}
+td,th{
+text-align:center;
+border:1px solid
+}
+div{
+text-align:center;
+margin:50px;
+}
+</style>
+ </head>
+ <body>
+<div>
+<input type="text" id="id" placeholder="请输入编号">
+<input type="text" id="name" placeholder="请输入姓名">
+<input type="text" id="gender" placeholder="请输入性别">
+<input type="button" value="添加" id="btn_add">
+</div>
+<table>
+<caption>学生信息表</caption>
+<tr>
+<th>编号</th><th>姓名</th><th>性别</th>
+<th><a>删除</a></th>
+<tr>
+<tr>
+<td>1</td><td>令狐冲</td><td>男</td>
+<td><a href="javascripte:void(0)" onclick="delLine(this)">删除</a></td>
+<tr>
+<tr>
+<td>2</td><td>任我行</td><td>性别</td>
+<td><a href="javascripte:void(0)" onclick="delLine(this)">删除</a></td>
+<tr>
+<tr><td>3</td><td>岳不群</td><td>？</td>
+<td><a href="javascripte:void(0)" onclick="delLine(this)">删除</a></td>
+<tr>
+</table>
+<script type="text/javascript">
+//
+var btn_add=document.getElementById("btn_add");
+//给添加按钮注册事件
+btn_add.onclick=function(){
+//获取文本输入框中的内容
+var id_value=document.getElementById("id").value;
+var name_value=document.getElementById("name").value;
+var gender_value=document.getElementById("gender").value;
+//1创建td节点,a节点
+var id_td=document.createElement("td");
+var name_td=document.createElement("td");
+var gender_td=document.createElement("td");
+var a_del=document.createElement("a");
+a_del.setAttribute("href","javascript:void(0)");
+a_del.setAttribute("onclick","delLine(this)");
+var del_td=document.createElement("td");
+var tr=document.createElement("tr");
+//创建文本节点，并将文本节点添加到td中
+var id=document.createTextNode(id_value);
+id_td.appendChild(id);
+var name=document.createTextNode(name_value);
+name_td.appendChild(name);
+var gender=document.createTextNode(gender_value);
+gender_td.appendChild(gender);
+//添加文本节点到a标签中
+var a=document.createTextNode("删除");
+a_del.appendChild(a);
+//添加a到td中
+del_td.appendChild(a_del);
+//添加td到tr中
+tr.appendChild(id_td);
+tr.appendChild(name_td);
+tr.appendChild(gender_td);
+tr.appendChild(del_td);
+
+//1获取table标签
+var table=document.getElementsByTagName("table")[0];
+table.appendChild(tr);
+}
+
+
+//给删除超链接注册事件
+function delLine(obj){
+//获取要删除的tr节点
+var tr_dele=obj.parentNode.parentNode;
+//获取table标签
+var table=obj.parentNode.parentNode.parentNode;
+table.removeChild(tr_dele);
+}
+</script>
+ </body>
+</html>
+
+
+
+
+
+
+
+
+
+
