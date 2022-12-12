@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>
+   动态DOM编程起点和基础
+</title>
+  <style type="text/css">
+	
+	body{
+		background-color: aqua;
+	}
+	div{
+	 width:50px;
+	 height:50px;
+	margin: 5px;
+	 background-color:rgba(255, 0, 0, 0.2);
+	display:inline-block;
+	border-radius:50%;
+	position: absolute;
+	text-align: center;
+	transition: all 0.5s ;
+	}
+	p{
+		
+		padding-left:5px;
+		padding-top:5px;
+		/* padding:5px; */
+		margin:10px;
+	}
+  </style>
+
+ </head>
+ <body>
+  <script type="text/javascript">
+	var ballDiv = [];
+	var textCon = [...'2020203000李裕离离原上草，一岁一枯荣。野火烧不尽，春风吹又生。远芳侵古道，晴翠接荒城。又送王孙去，萋萋满别情。'] ;
+	const textCons = ['考生的信息，在这里显示。离离原上草，一岁一枯荣。野火烧不尽，春风吹又生。远芳侵古道，晴翠接荒城。又送王孙去，萋萋满别情。' , 
+            '艳色天下重，西施宁久微。朝为越溪女，暮作吴宫妃。贱日岂殊众，贵来方悟稀。邀人傅脂粉，不自著罗衣。君宠益娇态，君怜无是非。当时浣纱伴，莫得同车归。持谢邻家子，效颦安可希！' ,
+             '绝代有佳人，幽居在空谷。自云良家子，零落依草木。关中昔丧乱，兄弟遭杀戮。官高何足论，不得收骨肉。世情恶衰歇，万事随转烛。夫婿轻薄儿，新人美如玉。合昏尚知时，鸳鸯不独宿。但见新人笑，那闻旧人哭！在山泉水清，出山泉水浊。侍婢卖珠回，牵萝补茅屋。摘花不插发，采柏动盈掬。天寒翠袖薄，日暮倚修竹。'];
+	//数组变量
+	var count = 0;
+
+	ballArr();
+	//创建节点数组
+	function ballArr(){
+		for(var i= 0;i<textCon.length;i++){
+			ballDiv[i] = createBall(textCon[i]);
+		}
+	}
+
+	//移除所有 div
+	function removeArr(){
+		var bodyParent = document.querySelector("body");
+		var child = bodyParent.lastElementChild;
+		while(child){
+			bodyParent.removeChild(child);
+			child = bodyParent.lastElementChild;
+		}
+	}
+
+
+	//鼠标移动
+	document.onmousemove =  function(){
+		var width = 0;
+		var height = 0;
+	     for(var i = 0; i < ballDiv.length ; i++){
+			if(i % 6 == 0){
+				height += 50;
+				width = 0;
+			}
+			width += 50;
+				ballDiv[i].style.left = width+'px';
+				ballDiv[i].style.top = height+'px';	
+		}
+	}
+
+	//鼠标点击，随机移动div
+	document.body.onclick =	function(){
+		for (var i=0;i < ballDiv.length; i++) {
+			var w = Math.floor(Math.random()*500);
+			var h = Math.floor(Math.random()*500);
+
+			ballDiv[i].style.left = w + 'px';
+			ballDiv[i].style.top = h + 'px';
+		}
+	}
+	//转换数组
+	document.body.ondblclick = function(){
+
+		//console.log("我被双击了")
+		removeArr();
+		//console.log("删除了所有节点")
+		count++;
+	
+		if(count>2){
+			count = 0;
+		}
+		//console.log("我换数组了")
+		textCon = [...textCons[count]];
+		ballArr();
+		}
+
+		//创建 div 节点
+		function createBall(text){
+			//创建p节点
+			var pDom = document.createElement('p');
+			//创建文本节点
+			var textNode = document.createTextNode(text);
+			//将文本节点添加到p节点 ?
+			pDom.appendChild(textNode);
+			//创建div节点
+			divDom = document.createElement('div') ;
+			//将p节点添加到div ?
+			divDom.appendChild(pDom);
+			//将div对象加入到body中
+			document.body.appendChild(divDom) ; 
+
+			return divDom;
+		  }
+
+		  
+
+		  //随机
+		this.randPositionDiv = function(){ 
+			
+			var x = Math.floor(Math.random() * bodyWidth ) ; 
+			if(x >= bodyWidth - r){   //r在62行
+				x = bodyWidth - r ; 
+			} 
+			var y = Math.floor( Math.random() * bodyHeight ); 
+			if(y >= bodyHeight - r){ 
+				y = bodyHeight - r ; 
+			} 
+			//更改div的相对body的位置
+			this.dom.style.left = x + 'px' ; 
+			this.dom.style.top = y + 'px' ; 
+        } ; 
+		
+  </script>
+ </body>
+</html>
